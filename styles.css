@@ -1,0 +1,40 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#title {
+    margin-top: 45px;
+    margin-bottom: 45px;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    height: 600px;
+    width: 600px;
+    border: black solid 2px
+}
+
+.numbScreen {
+    padding: 35px;
+    text-align: right;
+}
+
+.row {
+    display: flex;
+    flex-grow: 1;
+    min-height: 0px;
+}
+
+.box {
+    flex-grow: 1;
+    border: black solid 1px;
+}
+
