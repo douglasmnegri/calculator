@@ -35,6 +35,18 @@ body {
 
 .box {
     flex-grow: 1;
+    font-size: 20px;
+    text-align: center;
     border: black solid 1px;
 }
 
+
+
+.box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+}
