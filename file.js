@@ -1,79 +1,58 @@
 let firstNumber = 0;
-let secondNumber = 5;
-let operator = "*";
+let secondNumber = 0;
+let operatorElement = " ";
 
 const container = document.querySelector('#container');
 const screenResult = document.createElement('div');
 screenResult.classList.add('numbScreen')
 screenResult.textContent = firstNumber;
 
-function add(a, b) {
-    return a + b;
-}
+function createBoxes(numBox) {
 
-function subtract(a, b) {
-    return a - b;
-}
+    function randomNum() {
+        return Math.floor(Math.random())
+    }
+    container.appendChild(screenResult)
+        for(let i = 0; i < numBox; i++) {
+            const row = document.createElement('div');
+            row.classList.add('row')
+            container.appendChild(row);
+    
+            for (let j = 0; j < numBox; j++) {
+                const square = document.createElement('div');
+                square.className = "box";
+                row.appendChild(square);
+            };
+        };
+    };
+    
+    createBoxes(4);
 
-function multiply(a, b) {
-    return a * b;
-}
-
-function divide(a, b) {
-    return a / b;
-}
-
-const operate = () => {
+const operate = (a, b, operator) => {
     switch(operator) {
         case "+":
-        return firstNumber + secondNumber;
+        return a + b
         break;
 
         case "-":
-        return firstNumber - secondNumber;
+        return a - b;
         break;
 
         case "*":
-        return firstNumber * secondNumber;
+        return a * b;
         break;
 
         case "/":
-        return firstNumber / secondNumber;
+        return a / b;
         break;
 
         default:
-        return firstNumber;
+        return a;
         break;
     }
 }
 
-
-
-
-function createBoxes(numBox) {
-
-function randomNum() {
-    return Math.floor(Math.random())
-}
-container.appendChild(screenResult)
-    for(let i = 0; i < numBox; i++) {
-        const row = document.createElement('div');
-        row.classList.add('row')
-        container.appendChild(row);
-
-        for (let j = 0; j < numBox; j++) {
-            const square = document.createElement('div');
-            square.className = "box";
-            row.appendChild(square);
-            
-        };
-    };
-};
-
-createBoxes(4);
-console.log(operate());
-
-
+//Transformar em HTML - UI
 const square = document.querySelectorAll('.box');
 square.forEach((div, index) => {
     const randomNumber = index + 1;
@@ -81,14 +60,12 @@ square.forEach((div, index) => {
 });
 
 
-
-
 const squareOne = document.querySelector('.square1');
 const squareTwo = document.querySelector('.square2');
 const squareThree = document.querySelector('.square3');
 const squareFour = document.querySelector('.square4');
-squareOne.textContent = "7";
-squareTwo.textContent = "8";
+squareOne.textContent = 7;
+squareTwo.textContent = 8;
 squareThree.textContent = "9";
 squareFour.textContent = "+";
 
@@ -118,99 +95,121 @@ const squareSixteen = document.querySelector('.square16');
 squareThirteen.textContent = "C";
 squareFourteen.textContent = "0";
 squareFifteen.textContent = "=";
-squareSixteen.textContent = "÷";
+squareSixteen.textContent = "/";
 
-//We need to select each box, and add a function that process the number and shows it in our display.
-//addEventListener should be the function that calls each number/operations. 
-
-
-function selectNumber() {
-    for (let i = 1; i <= 16; i++) {
-    const box = document.querySelector(`.square${i}`);
-    box.addEventListener('click', () => {
-        
-    if(firstNumber === 0) {
-        if(box.classList.contains('square1')) {
-            firstNumber = 7;
-            console.log(firstNumber)
-
-        }
-       else if (box.classList.contains('square2')) {
-            firstNumber += 8;
-       }
-       else if (box.classList.contains('square3')) {
-            firstNumber += 9;
-       }
-       else if (box.classList.contains('square5')) {
-            firstNumber += 4;
-       }
-       else if (box.classList.contains('square6')) {
-            firstNumber += 5;
-       }
-       else if (box.classList.contains('square7')) {
-            firstNumber += 6;
-       }
-       else if (box.classList.contains('square9')) {
-            firstNumber += 1
-       }
-       else if (box.classList.contains('square10')) {
-            firstNumber += 2
-       }
-       else if (box.classList.contains('square11')) {
-            firstNumber += 3
-       }
-       screenResult.textContent = firstNumber;
+//Função pra por um event listener em cada número/operação
+square.forEach((div) => {
+    console.log(div.textContent);
+    const numberValue = parseFloat(div.textContent.trim());
+    
+    if (!isNaN(numberValue) && typeof numberValue === 'number') {
+        // If it's a valid number, add the 'number' class
+        div.classList.add('number');
     }
+});
 
-    else if (firstNumber !== 0) {
-        if(box.classList.contains('square1')) {
-            firstNumber = "7";
+function selectNum () {
+squareOne.addEventListener('click', () => {
+    screenResult.textContent = squareOne.textContent;
+    firstNumber = squareOne.textContent;
+    console.log(firstNumber);
+});
 
-        }
-       else if (box.classList.contains('square2')) {
-            firstNumber = "8";
-       }
-       else if (box.classList.contains('square3')) {
-            firstNumber = "9";
-       }
-       else if (box.classList.contains('square5')) {
-            firstNumber = "4";
-       }
-       else if (box.classList.contains('square6')) {
-            firstNumber = "5";
-       }
-       else if (box.classList.contains('square7')) {
-            firstNumber = "6";
-       }
-       else if (box.classList.contains('square9')) {
-        firstNumber = "1"
-       }
-        else if (box.classList.contains('square10')) {
-            firstNumber = "2"
-       }
-        else if (box.classList.contains('square11')) {
-            firstNumber = "3";
-       }
-       screenResult.textContent += firstNumber;
-    }
-    });
-};
-};
+squareSixteen.addEventListener('click', () => {
+    operatorElement = squareSixteen.textContent;
+    console.log(operatorElement);
+});
 
-selectNumber();
-//When the variable is called by the function addEventListener, it should show the value in our display.
-//The initial value will always be 0, so we can't simply concantenate for the first time. 
+squareTen.addEventListener('click', () => {
+    secondNumber = squareTen.textContent
+    console.log(secondNumber);
+});
 
-/* Ex: if (screenResult.textContent === 0) {
+squareFifteen.addEventListener('click', () => {
+    let result = (operate(firstNumber, secondNumber, operatorElement));
+    screenResult.textContent = result;
+    return result;
+});
 
-    switch (screenResult) {
-    case squareOne:
-    screenResult.textContent = 7;
-    break;
+}
 
-    case squareTwo:
-    screenResult.textContent = 8;
-    break;
-    }
-} */
-squareSixteen.textContent = "÷";
+selectNum();
+
+// function selectNumber() {
+//     for (let i = 1; i <= 16; i++) {
+//     const box = document.querySelector(`.square${i}`);
+//     box.addEventListener('click', () => {
+//     if(firstNumber === 0) {
+//         if(box.classList.contains('square1')) {
+//             firstNumber = 7;
+//             console.log(firstNumber)
+
+//         }
+//        else if (box.classList.contains('square2')) {
+//             firstNumber += 8;
+//        }
+//        else if (box.classList.contains('square3')) {
+//             firstNumber += 9;
+//        }
+//        else if (box.classList.contains('square5')) {
+//             firstNumber += 4;
+//        }
+//        else if (box.classList.contains('square6')) {
+//             firstNumber += 5;
+//        }
+//        else if (box.classList.contains('square7')) {
+//             firstNumber += 6;
+//        }
+//        else if (box.classList.contains('square9')) {
+//             firstNumber += 1
+//        }
+//        else if (box.classList.contains('square10')) {
+//             firstNumber += 2
+//        }
+//        else if (box.classList.contains('square11')) {
+//             firstNumber += 3
+//        }
+//        screenResult.textContent = firstNumber;
+//     }
+
+//     else if (firstNumber !== 0) {
+//         if(box.classList.contains('square1')) {
+//             firstNumber = "7";
+//         }
+//        else if (box.classList.contains('square2')) {
+//             firstNumber = "8";
+//        }
+//        else if (box.classList.contains('square3')) {
+//             firstNumber = "9";
+//        }
+//        else if (box.classList.contains('square5')) {
+//             firstNumber = "4";
+//        }
+//        else if (box.classList.contains('square6')) {
+//             firstNumber = "5";
+//        }
+//        else if (box.classList.contains('square7')) {
+//             firstNumber = "6";
+//        }
+//        else if (box.classList.contains('square9')) {
+//             firstNumber = "1"
+//        }
+//         else if (box.classList.contains('square10')) {
+//             firstNumber = "2"
+//        }
+//         else if (box.classList.contains('square11')) {
+//             firstNumber = "3";
+//        }
+//        else if (box.classList.contains('square14')) {
+//         firstNumber = "0";
+//    }
+   
+//    screenResult.textContent += firstNumber;  
+//    let displayNumber = screenResult.textContent;
+
+//  }
+//     });
+// };
+// };
+
+// selectNumber();
