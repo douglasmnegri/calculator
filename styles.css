@@ -22,30 +22,26 @@ body {
     border: black solid 2px
 }
 
-.numbScreen {
-    padding: 35px;
-    text-align: right;
-}
-
-.row {
-    display: flex;
-    flex-grow: 1;
-    min-height: 0px;
-}
-
-.box {
-    flex-grow: 1;
-    font-size: 20px;
-    text-align: center;
-    border: black solid 1px;
-}
-
-
 .box {
     display: flex;
-    justify-content: center;
+    flex: 1;
     align-items: center;
-    text-align: center;
-    height: 100%;
-    width: 100%;
+    justify-content: center;
+    border: solid black 2px;
+    
+}
+
+#display {
+    display: flex;
+    align-items: center;
+    padding-right: 5px;
+    justify-content: right;
+    border: solid black 2px;
+    height: 70px;
+
+}
+
+.box-container {
+    display: flex;
+    flex-grow: 1;
 }
