@@ -27,7 +27,9 @@ numberButtons.forEach((number) => {
 
 const addOperator = document.querySelector('#plus');
 addOperator.addEventListener('click', () => {
+    returnOperation();
     state.operator = '+'
+    console.log(state.operator);
     if (state.inputTarget === 'num1') {
         state.inputTarget = 'num2';
     }
@@ -35,13 +37,13 @@ addOperator.addEventListener('click', () => {
     if (state.inputTarget === 'num2' && state.num2 !== "") {
         state.num1 = parseInt(state.num1) + parseInt(state.num2);
         state.num2 = "";
-        result = state.num1;
-        display.textContent = state.num1;
     }
+
 });
 
 const subtractOperator = document.querySelector('#subtract');
 subtractOperator.addEventListener('click', () => {
+    returnOperation();
     state.operator = '-';
     if (state.inputTarget === 'num1') {
         state.inputTarget = 'num2';
@@ -50,7 +52,6 @@ subtractOperator.addEventListener('click', () => {
     if (state.inputTarget === 'num2' && state.num2 !== "") {
         state.num1 = parseInt(state.num1) - parseInt(state.num2);
         state.num2 = "";
-        result = state.num1;
         display.textContent = state.num1;
         console.log(state.operator);
     }
@@ -58,6 +59,7 @@ subtractOperator.addEventListener('click', () => {
 
 const multiplyOperator = document.querySelector('#multiply');
 multiplyOperator.addEventListener('click', () => {
+    returnOperation();
     state.operator = '*';
     if (state.inputTarget === 'num1') {
         state.inputTarget = 'num2';
@@ -66,13 +68,13 @@ multiplyOperator.addEventListener('click', () => {
     if (state.inputTarget === 'num2' && state.num2 !== "") {
         state.num1 = parseInt(state.num1) * parseInt(state.num2);
         state.num2 = "";
-        result = state.num1;
         display.textContent = state.num1;
     }
 });
 
 const divisionOperator = document.querySelector('#division');
 divisionOperator.addEventListener('click', () => {
+    returnOperation();
     state.operator = '/';
     if (state.inputTarget === 'num1') {
         state.inputTarget = 'num2';
@@ -81,7 +83,6 @@ divisionOperator.addEventListener('click', () => {
     if (state.inputTarget === 'num2' && state.num2 !== "") {
         state.num1 = parseInt(state.num1) / parseInt(state.num2);
         state.num2 = "";
-        result = state.num1;
         display.textContent = state.num1;
     }
 });
@@ -97,32 +98,32 @@ clearDisplay.addEventListener('click', () => {
 
 const resultOperator = document.querySelector('#equals');
 resultOperator.addEventListener('click', () => {
+    returnOperation();
+});
+
+function returnOperation () {
     if (state.inputTarget === 'num2' && state.num2 !== "" && state.operator === '+') {
         state.num1 = parseInt(state.num1) + parseInt(state.num2);
         state.num2 = "";
         state.operator = "";
-        result = state.num1;
         display.textContent = state.num1;
     }
 
     else if (state.inputTarget === 'num2' && state.num2 !== "" && state.operator === '-') {
         state.num1 = parseInt(state.num1) - parseInt(state.num2);
         state.num2 = "";
-        result = state.num1;
         display.textContent = state.num1;
     }
 
     else if (state.inputTarget === 'num2' && state.num2 !== "" && state.operator === '/') {
         state.num1 = parseInt(state.num1) / parseInt(state.num2);
         state.num2 = "";
-        result = state.num1;
         display.textContent = state.num1;
     }
 
     else if (state.inputTarget === 'num2' && state.num2 !== "" && state.operator === '*') {
         state.num1 = parseInt(state.num1) * parseInt(state.num2);
         state.num2 = "";
-        result = state.num1;
         display.textContent = state.num1;
     }
-});
+        }
