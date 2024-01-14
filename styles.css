@@ -42,5 +42,17 @@ body {
 
 .box-container {
     display: flex;
-    flex-grow: 1;
+    flex: 1;
 }
+
+.sidebox {
+    display: flex;
+    align-items: stretch;
+    flex: 1;
+}
+
+.mainbox {
+    display: flex;
+    flex: 2;
+}
+
