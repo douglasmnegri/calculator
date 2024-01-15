@@ -1,3 +1,4 @@
+
 const state = {
     num1: "",
     num2: "",
@@ -8,26 +9,35 @@ const state = {
 
 const display = document.querySelector('#display');
 const numberButtons = document.querySelectorAll('button');
+
 numberButtons.forEach((number) => {
     number.addEventListener('click', () => {
         const buttonText = number.textContent;
 
         if (!isNaN(parseFloat(buttonText))) {
-            if(state.operator === '=') {
+            if (state.operator === '=') {
                 state.num1 = "";
                 state.num2 = "";
                 state.operator = "";
             }
-            if (state.inputTarget === 'num1') {
-                state.num1 += buttonText;
+
+            const cleanedInput = cleanInput(buttonText);
+
+            if (state.inputTarget === 'num1' && state.num1.length <= 9) {
+                state.num1 += cleanedInput;
                 display.textContent = state.num1;
-            } else {
-                state.num2 += buttonText;
+            } else if (state.inputTarget === 'num2' && state.num2.length <= 9) {
+                state.num2 += cleanedInput;
                 display.textContent = state.num2;
             }
         }
     });
 });
+
+function cleanInput(input) {
+    return input.replace(/\D/g, '');
+}
+
 
 const eraser = document.querySelector('#eraser');
 eraser.addEventListener('click', () => {
@@ -42,12 +52,14 @@ eraser.addEventListener('click', () => {
         display.textContent = state.num2;
         console.log(state.num2)
     }
+    if (state.num1.toString().length > 9) {
+        clear();
+    }
   
 });
 
 const percentage = document.querySelector('#percentage');
 percentage.addEventListener('click', () => {
-
     if(state.inputTarget == 'num1') {
         state.num1 = state.num1 / 100;
         display.textContent = state.num1;
@@ -57,6 +69,14 @@ percentage.addEventListener('click', () => {
         state.num2 = state.num2 / 100;
         display.textContent = state.num2;
     }
+
+    if (state.num1.toString().length > 8) {
+        display.textContent = state.num1.toExponential(4); 
+    } else {
+        display.textContent = state.num1;
+    }
+    state.num2 = "";
+    state.inputTarget = 'num1';
 });
 
 const decimalPoint = document.querySelector('#decimal');
@@ -136,12 +156,16 @@ divisionOperator.addEventListener('click', () => {
 
 const clearDisplay = document.querySelector('#clear');
 clearDisplay.addEventListener('click', () => {
+    clear();
+});
+
+function clear() {
     state.num1 = "";
     state.num2 = "";
     state.operator = null;
     state.inputTarget = 'num1';
     display.textContent = 0;
-});
+}
 
 const resultOperator = document.querySelector('#equals');
 resultOperator.addEventListener('click', () => {
@@ -167,9 +191,37 @@ function returnOperation() {
                 break;
         }
 
-        display.textContent = state.num1;
+        if (state.num1.toString().length > 8) {
+            display.textContent = state.num1.toExponential(4); 
+        } else {
+            display.textContent = state.num1;
+        }
+
         state.num2 = "";
-        state.operator = "=";
         state.inputTarget = 'num1';
     }
 }
+
+
+let $toggler = document.getElementById('toggler'),
+    $calculator = document.querySelector('.calculator');
+
+if($calculator.classList.contains('dark')) {
+  $toggler.querySelector('#light').style.display = 'block';
+  $toggler.querySelector('#dark').style.display = 'none';
+} else {
+  $toggler.querySelector('#light').style.display = 'none';
+  $toggler.querySelector('#dark').style.display = 'block';
+}
+
+$toggler.addEventListener('click', function() {
+  $calculator.classList.toggle('dark');
+  
+  if($calculator.classList.contains('dark')) {
+    $toggler.querySelector('#light').style.display = 'block';
+    $toggler.querySelector('#dark').style.display = 'none';
+  } else {
+    $toggler.querySelector('#light').style.display = 'none';
+    $toggler.querySelector('#dark').style.display = 'block';
+  }
+})
