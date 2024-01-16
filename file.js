@@ -48,16 +48,15 @@ function cleanInput(input) {
 
 const eraser = document.querySelector('#eraser');
 eraser.addEventListener('click', () => {
-    if (state.inputTarget == 'num1') {
-        state.num1 = Math.floor(state.num1 / 10)
+    if (state.inputTarget === 'num1') {
+        state.num1 = state.num1.slice(0, -1);
         display.textContent = state.num1;
-        console.log(state.num1)
+        state.inputTarget = 'num1'
     }
-
-    if (state.inputTarget == 'num2') {
+    if (state.inputTarget === 'num2') {
         state.num2 = state.num2.slice(0, -1);
         display.textContent = state.num2;
-        console.log(state.num2)
+        state.inputTarget = 'num2'
     }
     if (state.num1.toString().length > 9) {
         clear();
