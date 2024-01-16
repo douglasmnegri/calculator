@@ -269,4 +269,7 @@ document.addEventListener('keydown', (event) => {
     if(key === 'e' || key === 'E' || key === 'Backspace') {
         document.querySelector('#eraser').click();
     }
+    if(key === 'n' || key === 'N') {
+        document.querySelector('button').click();
+    }
 });
