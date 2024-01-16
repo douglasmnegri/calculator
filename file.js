@@ -1,11 +1,9 @@
-
 const state = {
     num1: "",
     num2: "",
     operator: null,
     inputTarget: 'num1'
 };
-
 
 const display = document.querySelector('#display');
 const numberButtons = document.querySelectorAll('button');
@@ -26,6 +24,7 @@ numberButtons.forEach((number) => {
             if (state.inputTarget === 'num1' && state.num1.length <= 9) {
                 state.num1 += cleanedInput;
                 display.textContent = state.num1;
+
             } else if (state.inputTarget === 'num2' && state.num2.length <= 9) {
                 state.num2 += cleanedInput;
                 display.textContent = state.num2;
@@ -35,8 +34,16 @@ numberButtons.forEach((number) => {
 });
 
 function cleanInput(input) {
-    return input.replace(/\D/g, '');
+    const hasDecimal = input.includes('.');
+    let cleanedInput = input.replace(/\D/g, '');
+
+    if (hasDecimal) {
+        cleanedInput = cleanedInput.replace(/(?!^)\./, ''); 
+    }
+
+    return cleanedInput;
 }
+
 
 
 const eraser = document.querySelector('#eraser');
@@ -198,6 +205,7 @@ function returnOperation() {
         }
 
         state.num2 = "";
+        state.operator = '=';
         state.inputTarget = 'num1';
     }
 }
@@ -224,4 +232,41 @@ $toggler.addEventListener('click', function() {
     $toggler.querySelector('#light').style.display = 'none';
     $toggler.querySelector('#dark').style.display = 'block';
   }
-})
+});
+
+document.addEventListener('keydown', (event) => {
+    const key = event.key;
+    console.log(key);
+    const isNumber = () => {return isFinite(key)};
+
+    if(isNumber(key) === true) {
+        document.getElementById(`${key}`).click();
+    }
+	if (key === 'r' || event.key ==='c' || event.key === 'C') {
+        document.querySelector('#clear').click()
+	}
+    if (key === '.') {
+		document.querySelector('#decimal').click();	
+	}
+	if (key === '=' || event.key === 'Enter') {
+		document.querySelector('#equals').click();	
+	}
+    if (key === '*' || key === "x" || key === "X") {
+        document.querySelector('#multiply').click();
+    }
+    if (key === '-') {
+        document.querySelector('#subtract').click();
+    }
+    if(key === '+') {
+        document.querySelector('#plus').click();
+    }
+    if(key === '%') {
+        document.querySelector('#percentage').click();
+    }
+    if(key === '/' || key === '÷') {
+        document.querySelector('#division').click();
+    }
+    if(key === 'e' || key === 'E' || key === 'Backspace') {
+        document.querySelector('#eraser').click();
+    }
+});
