@@ -45,23 +45,30 @@ function cleanInput(input) {
 }
 
 
-
-const eraser = document.querySelector('#eraser');
 eraser.addEventListener('click', () => {
-    if (state.inputTarget === 'num1') {
-        state.num1 = state.num1.slice(0, -1);
-        display.textContent = state.num1;
-        state.inputTarget = 'num1'
+    const currentDisplay = display.textContent;
+    if (currentDisplay !== '0' && currentDisplay !== '') {
+        if (currentDisplay.length > 1) {
+            display.textContent = currentDisplay.slice(0, -1);
+        } else {
+            display.textContent = '0';
+        }
+
+        if (state.inputTarget === 'num1') {
+            state.num1 = display.textContent;
+        } else if (state.inputTarget === 'num2' && state.num2 !== "") {
+            state.num2 = display.textContent;
+        }
+        else {
+            state.operator = "";
+            state.inputTarget = 'num1';
+            state.num1 = display.textContent;
+        }
     }
-    if (state.inputTarget === 'num2') {
-        state.num2 = state.num2.slice(0, -1);
-        display.textContent = state.num2;
-        state.inputTarget = 'num2'
-    }
-    if (state.num1.toString().length > 9) {
+
+    if(currentDisplay.toString().length > 8) {
         clear();
     }
-  
 });
 
 const percentage = document.querySelector('#percentage');
@@ -69,7 +76,6 @@ percentage.addEventListener('click', () => {
     if(state.inputTarget == 'num1') {
         state.num1 = state.num1 / 100;
         display.textContent = state.num1;
-        console.log(state.num1)
     }
     if (state.inputTarget == 'num2') {
         state.num2 = state.num2 / 100;
@@ -180,6 +186,13 @@ resultOperator.addEventListener('click', () => {
 
 function returnOperation() {
     if (state.inputTarget === 'num2' && state.num2 !== "") {
+        if (state.num1 === "") {
+            state.num1 = "0";
+        }
+
+        if(state.num2 === "") {
+            state.num2 = "0";
+        }
         switch (state.operator) {
             case '+':
                 state.num1 = parseFloat(state.num1) + parseFloat(state.num2);
@@ -195,8 +208,7 @@ function returnOperation() {
                 break;
             default:
                 break;
-        }
-
+        }        
         if (state.num1.toString().length > 8) {
             display.textContent = state.num1.toExponential(4); 
         } else {
@@ -209,33 +221,8 @@ function returnOperation() {
     }
 }
 
-
-let $toggler = document.getElementById('toggler'),
-    $calculator = document.querySelector('.calculator');
-
-if($calculator.classList.contains('dark')) {
-  $toggler.querySelector('#light').style.display = 'block';
-  $toggler.querySelector('#dark').style.display = 'none';
-} else {
-  $toggler.querySelector('#light').style.display = 'none';
-  $toggler.querySelector('#dark').style.display = 'block';
-}
-
-$toggler.addEventListener('click', function() {
-  $calculator.classList.toggle('dark');
-  
-  if($calculator.classList.contains('dark')) {
-    $toggler.querySelector('#light').style.display = 'block';
-    $toggler.querySelector('#dark').style.display = 'none';
-  } else {
-    $toggler.querySelector('#light').style.display = 'none';
-    $toggler.querySelector('#dark').style.display = 'block';
-  }
-});
-
 document.addEventListener('keydown', (event) => {
     const key = event.key;
-    console.log(key);
     const isNumber = () => {return isFinite(key)};
 
     if(isNumber(key) === true) {
@@ -271,4 +258,27 @@ document.addEventListener('keydown', (event) => {
     if(key === 'n' || key === 'N') {
         document.querySelector('button').click();
     }
+});
+
+let $toggler = document.getElementById('toggler'),
+    $calculator = document.querySelector('.calculator');
+
+if($calculator.classList.contains('dark')) {
+  $toggler.querySelector('#light').style.display = 'block';
+  $toggler.querySelector('#dark').style.display = 'none';
+} else {
+  $toggler.querySelector('#light').style.display = 'none';
+  $toggler.querySelector('#dark').style.display = 'block';
+}
+
+$toggler.addEventListener('click', function() {
+  $calculator.classList.toggle('dark');
+  
+  if($calculator.classList.contains('dark')) {
+    $toggler.querySelector('#light').style.display = 'block';
+    $toggler.querySelector('#dark').style.display = 'none';
+  } else {
+    $toggler.querySelector('#light').style.display = 'none';
+    $toggler.querySelector('#dark').style.display = 'block';
+  }
 });
