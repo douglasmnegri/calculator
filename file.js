@@ -47,20 +47,19 @@ function cleanInput(input) {
 eraser.addEventListener('click', () => {
     const currentDisplay = display.textContent;
     console.log(currentDisplay.length);
-    if (currentDisplay.toString().length > 10) {
+    if (currentDisplay.includes('e')) {
         clear();
+        return;
     }
 
     if (currentDisplay !== '0' && currentDisplay !== '') {
         if (currentDisplay.length > 1) {
             display.textContent = currentDisplay.slice(0, -1);
         } else {
-            console.log("ok");
             clear();
             return; 
         }
 
-        // Move the following block outside the 'else' block
         if (state.inputTarget === 'num1') {
             state.num1 = display.textContent;
         } else if (state.inputTarget === 'num2' && state.num2 !== "") {
@@ -72,8 +71,6 @@ eraser.addEventListener('click', () => {
         }
     }
 });
-
-
 
 const percentage = document.querySelector('#percentage');
 percentage.addEventListener('click', () => {
