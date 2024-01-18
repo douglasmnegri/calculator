@@ -1,3 +1,5 @@
+// This object represents the current state of the calculator.
+// All operations and inputs are based on this state.
 const state = {
     num1: "",
     num2: "",
@@ -46,7 +48,6 @@ function cleanInput(input) {
 
 eraser.addEventListener('click', () => {
     const currentDisplay = display.textContent;
-    console.log(currentDisplay.length);
     if (currentDisplay.includes('e')) {
         clear();
         return;
@@ -222,6 +223,7 @@ function returnOperation() {
     }
 }
 
+//CSS and Keyboard Input.
 document.addEventListener('keydown', (event) => {
     const key = event.key;
     const isNumber = () => {return isFinite(key)};
@@ -303,7 +305,6 @@ numberButtons.forEach(element => {
                 element.classList.add('clicked');
             }
         }
-
 
         if (state.operator === "=") {
             document.querySelectorAll('.operator').forEach(opButton => {
