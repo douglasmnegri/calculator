@@ -294,7 +294,7 @@ numberButtons.forEach(element => {
             }, 300);
         }
 
-        if (element.classList.contains('operator') || element.id === "eraser") {
+        if (element.classList.contains('operator') || element.id === "eraser" || element.id === "clear") {
             document.querySelectorAll('.operator').forEach(opButton => {
                 opButton.classList.remove('clicked');
             });
