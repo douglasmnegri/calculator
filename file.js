@@ -18,7 +18,6 @@ numberButtons.forEach((number) => {
                 state.num2 = "";
                 state.operator = "";
             }
-
             const cleanedInput = cleanInput(buttonText);
 
             if (state.inputTarget === 'num1' && state.num1.length <= 9) {
@@ -47,29 +46,34 @@ function cleanInput(input) {
 
 eraser.addEventListener('click', () => {
     const currentDisplay = display.textContent;
+    console.log(currentDisplay.length);
+    if (currentDisplay.toString().length > 10) {
+        clear();
+    }
+
     if (currentDisplay !== '0' && currentDisplay !== '') {
         if (currentDisplay.length > 1) {
             display.textContent = currentDisplay.slice(0, -1);
         } else {
-            display.textContent = '0';
+            console.log("ok");
+            clear();
+            return; 
         }
 
+        // Move the following block outside the 'else' block
         if (state.inputTarget === 'num1') {
             state.num1 = display.textContent;
         } else if (state.inputTarget === 'num2' && state.num2 !== "") {
             state.num2 = display.textContent;
-        }
-        else {
+        } else {
             state.operator = "";
             state.inputTarget = 'num1';
             state.num1 = display.textContent;
         }
     }
-
-    if(currentDisplay.toString().length > 8) {
-        clear();
-    }
 });
+
+
 
 const percentage = document.querySelector('#percentage');
 percentage.addEventListener('click', () => {
@@ -176,7 +180,7 @@ function clear() {
     state.num2 = "";
     state.operator = null;
     state.inputTarget = 'num1';
-    display.textContent = 0;
+    display.textContent = "0";
 }
 
 const resultOperator = document.querySelector('#equals');
@@ -229,10 +233,10 @@ document.addEventListener('keydown', (event) => {
         document.getElementById(`${key}`).click();
     }
 	if (key === 'r' || event.key ==='c' || event.key === 'C') {
-        document.querySelector('#clear').click()
+        document.querySelector('#clear').click();
 	}
     if (key === '.') {
-		document.querySelector('#decimal').click();	
+		document.querySelector('#decimal').click();
 	}
 	if (key === '=' || event.key === 'Enter') {
 		document.querySelector('#equals').click();	
@@ -260,6 +264,7 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
+
 let $toggler = document.getElementById('toggler'),
     $calculator = document.querySelector('.calculator');
 
@@ -281,4 +286,32 @@ $toggler.addEventListener('click', function() {
     $toggler.querySelector('#light').style.display = 'none';
     $toggler.querySelector('#dark').style.display = 'block';
   }
+});
+
+numberButtons.forEach(element => {
+    element.addEventListener('click', () => {
+        if (!element.classList.contains('operator')) {
+            element.classList.add('clicked');
+            setTimeout(() => {
+                element.classList.remove('clicked');
+            }, 300);
+        }
+
+        if (element.classList.contains('operator') || element.id === "eraser") {
+            document.querySelectorAll('.operator').forEach(opButton => {
+                opButton.classList.remove('clicked');
+            });
+
+            if (state.operator && state.operator !== "=") {
+                element.classList.add('clicked');
+            }
+        }
+
+
+        if (state.operator === "=") {
+            document.querySelectorAll('.operator').forEach(opButton => {
+                opButton.classList.remove('clicked');
+            });
+        }
+    });
 });

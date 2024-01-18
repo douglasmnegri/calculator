@@ -86,7 +86,7 @@ body {
   will-change: auto;
   z-index: 2;
 }
-.calculator-button:hover, .calculator-button:focus {
+.calculator-button.clicked {
   box-shadow: 0px 10px 25px rgba(4, 37, 100, 0.12);
   border-radius: 4px;
   background-color: var(--button-bg-hover);
@@ -94,6 +94,7 @@ body {
   z-index: 5;
   transform: scale(1.35);
 }
+
 .calculator-button:focus {
   outline: none;
 }
@@ -189,7 +190,7 @@ body {
   transition: all 0.1s ease-in-out;
   z-index: 5;
 }
-.toggle-theme:hover, .toggle-theme:focus {
+.toggle-theme:active, .toggle-theme:focus {
   box-shadow: 0px 10px 25px rgba(4, 37, 100, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.2);
   background-color: var(--button-bg-hover);
